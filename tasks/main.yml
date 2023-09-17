@@ -1,16 +1,19 @@
 ---
-# tasks file for vector
 - block:
+# Скачивание дистрибутивов Vector
     - name: Get vector distrib
       ansible.builtin.get_url:
-        url: "https://packages.timber.io/vector/latest/vector-{{ vector_version }}.{{ ansible_architecture }}.rpm"
+        url: "https://packages.timber.io/vector/latest/vector-{{ vector_version }}.{{ ansibl>
         dest: "./vector-{{ vector_version }}.{{ ansible_architecture }}.rpm"
+
+# Установка пакетов vector
     - name: Install vector package
       become: true
       ansible.builtin.yum:
         name:
           - "./vector-{{ vector_version }}.{{ ansible_architecture }}.rpm"
 
+# Настройка конфига
     - name: Redefine vector config name
       become: true
       tags: vector_config
@@ -18,13 +21,17 @@
         path: /etc/default/vector
         regexp: "VECTOR_CONFIG="
         line: VECTOR_CONFIG=/etc/vector/config.yaml
+
+# Создание конфига vector
     - name: Create vector config
       become: true
       tags: vector_config
       ansible.builtin.copy:
         dest: /etc/vector/config.yaml
         content: |
-          {{ vector_config | to_nice_yaml(indent=2) }}
+              {{ vector_config | to_nice_yaml(indent=2) }}
+
+# Выполнение handlers
     - name: Flush handlers
       meta: flush_handlers
   notify: Start Vector service
