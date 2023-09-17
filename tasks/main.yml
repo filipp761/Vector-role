@@ -22,14 +22,13 @@
         regexp: "VECTOR_CONFIG="
         line: VECTOR_CONFIG=/etc/vector/config.yaml
 
-# Создание конфига vector
+# Создание конфига vector-2
     - name: Create vector config
-      become: true
       tags: vector_config
-      ansible.builtin.copy:
-        dest: /etc/vector/config.yaml
-        content: |
-              {{ vector_config | to_nice_yaml(indent=2) }}
+      become: true
+      ansible.builtin.template:
+        src: vector.j2
+        dest: "/etc/vector/config.yaml"
 
 # Выполнение handlers
     - name: Flush handlers
