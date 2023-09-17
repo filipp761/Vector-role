@@ -1,5 +1,4 @@
 ---
-# handlers file for vector
 - name: Start Vector service
   become: true
   ansible.builtin.service:
