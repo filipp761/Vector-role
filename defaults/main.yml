@@ -1,6 +1,5 @@
 ---
-# defaults file for vector
-vector_version: "0.31.0-1"
+vector_version: "0.32.1-1"
 vector_config:
   sources:
     log:
@@ -22,7 +21,7 @@ vector_config:
       inputs:
         - parse_logs
       database: logs
-      endpoint: "http://158.160.116.36:8123"
+      endpoint: "http://158.160.57.56:8123"
       table: log
       compression: gzip
   api:
